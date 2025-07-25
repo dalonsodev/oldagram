@@ -1,60 +1,53 @@
-const posts = [
-   {
-      name: "Vincent van Gogh",
-      username: "vincey1853",
-      location: "Zundert, Netherlands",
-      avatar: "images/avatar-vangogh.jpg",
-      post: "images/post-vangogh.jpg",
-      comment: "just took a few mushrooms lol",
-      likes: 21
-   },
-   {
-      name: "Gustave Courbet",
-      username: "gus1819",
-      location: "Ornans, France",
-      avatar: "images/avatar-courbet.jpg",
-      post: "images/post-courbet.jpg",
-      comment: "i'm feelin a bit stressed tbh",
-      likes: 4
-   },
-      {
-      name: "Joseph Ducreux",
-      username: "jd1735",
-      location: "Paris, France",
-      avatar: "images/avatar-ducreux.jpg",
-      post: "images/post-ducreux.jpg",
-      comment: "gm friends! which coin are YOU stacking up today?? post below and WAGMI!",
-      likes: 152
-   }
-]
+import postsData from "./postsData.js"
 
 const postsContainer = document.getElementById("posts-container")
 
-////
+// MEMORY CACHE - Undefined on purpose!
+let userDataCache = undefined
+
+// INITIALIZE LOCAL STORAGE
+function initStorage() {
+   // check if there's previous user data on storage
+   if (!localStorage.getItem("oldaUserData")) {
+      userDataCache = { posts: postsData }
+
+      persistToStorage()
+   }
+   const storedData = JSON.parse(localStorage.getItem("oldaUserData"))
+   userDataCache = { posts: storedData.posts || postsData }
+
+   persistToStorage()
+}
+initStorage()
+
+// PERSIST TO LOCALSTORAGE
+function persistToStorage() {
+   localStorage.setItem('oldaUserData', JSON.stringify(userDataCache))
+}
 
 function renderPosts() {
    let postsList = ""
    
-   for (let i = 0; i < posts.length; i++) {
+   userDataCache.posts.forEach(post => {
       postsList += `
-         <section class="post">
+         <section class="post" data-id="${post.id}">
             <div class="creator-tab">
-               <a class="creator-profile-link" href="https://oldagram.com/user/${posts[i].username}">
-                  <img class="avatar creator-avatar" src="${posts[i].avatar}" alt="${posts[i].name} avatar" >
+               <a class="creator-profile-link" href="https://oldagram.com/user/${post.username}">
+                  <img class="avatar creator-avatar" src="${post.avatar}" alt="${post.name} avatar" >
                </a>
                <div class="creator-details">
-                  <a class="creator-profile-link" href="https://oldagram.com/user/${posts[i].username}">
-                     <h2 class="creator-name">${posts[i].name}</h2>
+                  <a class="creator-profile-link" href="https://oldagram.com/user/${post.username}">
+                     <h2 class="creator-name">${post.name}</h2>
                   </a>
-                  <address>${posts[i].location}</address>
+                  <address>${post.location}</address>
                </div>
             </div>
-            <img class="post-img" src="${posts[i].post}" alt="${posts[i].name} portrait painting" >
+            <img class="post-img" src="${post.post}" alt="${post.name} portrait painting" >
             <div class="extras-container">
                <ul class="buttons">
                   <li>
                      <button class="btn-icon like-btn">
-                        <img class="icon like-icon" src="images/icon-heart.png" alt="Heart icon" >
+                        <img class="icon like-icon" src="${post.isLiked ? 'images/icon-heart-filled.png' : 'images/icon-heart.png'}" alt="Heart icon" >
                      </button>
                   </li>
                   <li>
@@ -68,26 +61,44 @@ function renderPosts() {
                      </button>
                   </li>
                </ul>
-               <p class="likes-count">${posts[i].likes} likes</p>
-               <p class="creator-caption"><span class="username">${posts[i].username}</span> ${posts[i].comment}</p>
+               <p class="likes-count">${post.likes} likes</p>
+               <p class="creator-caption"><span class="username">${post.username}</span> ${post.comment}</p>
             </div>
          </section>
       `    
-   }
+   })
    postsContainer.innerHTML = postsList
 }
 renderPosts()
 
-//// Increment like count
+// HELPER FUNCTION TO TOGGLE LIKES
+function toggleLike(post, likesCounter, likeIcon) {
+   post.isLiked = !post.isLiked
+   post.likes += post.isLiked ? 1 : - 1
+   post.likes = Math.max(0, post.likes) // evitar likes negativos
+   likeIcon.src = post.isLiked ? "images/icon-heart-filled.png" : "images/icon-heart.png"
+   likesCounter.textContent = `${post.likes} likes`
+   
+   persistToStorage()
+}
+
+// LIKE BTN HANDLER
 document.addEventListener("click", function(e) {
    if (e.target.classList.contains("like-icon")) {
-      const btn = e.target.closest(".btn-icon")
-      btn.blur()
-      const post = e.target.closest(".post")
-      const likesCounter = post.querySelector(".likes-count")
-      const currentLikes = parseInt(likesCounter.textContent)
-      likesCounter.textContent = `${currentLikes + 1} likes`
-      
-      e.target.src = "images/icon-heart-filled.png"
+      const likeBtn = e.target.closest(".btn-icon")
+      likeBtn.blur() // remove focus from btn
+      const likedPost = e.target.closest(".post")
+      const postId = likedPost.dataset.id
+      const likesCounter = likedPost.querySelector(".likes-count")
+
+      // look for specific post (e.target)
+      const post = userDataCache.posts.find(p => p.id === postId)
+
+      if (post) {
+         toggleLike(post, likesCounter, e.target)
+      }
+      else {
+         console.error("Couldn't find post with id:", postId)
+      }
    }
 })
