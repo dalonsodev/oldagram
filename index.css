@@ -1,169 +1,168 @@
 :root {
-    /* --body-bg: #c6c6c6; the color provided in figma file doesn't match the example */
-    --body-bg: rgba(0, 0, 0, 0.04);
-    --header-bg: #ffffff;
-    --post-bg: #ffffff;
-    --body-color: #000000;
-    --avatar-border-radius: 50%;
-    --font-family: 'Source Sans 3', sans-serif;
+   /* --body-bg: #c6c6c6; the color provided in figma file doesn't match the example */
+   --body-bg: rgba(0, 0, 0, 0.04);
+   --header-bg: #ffffff;
+   --post-bg: #ffffff;
+   --body-color: #000000;
+   --avatar-border-radius: 50%;
+   --font-family: 'Source Sans 3', sans-serif;
 }
 
 *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
 }
 
 html, body {
-    font-family: var(--font-family);
-    background: var(--body-bg);
-    /* width: 375px;
-    max-width: 375px; */
-    width: 375px;
-    margin: 0 auto;
+   font-family: var(--font-family);
+   background: var(--body-bg);
+   /* width: 375px;
+   max-width: 375px; */
+   width: 375px;
+   margin: 0 auto;
 }
 
 ul, li {
-    list-style-type: none;
+   list-style-type: none;
 }
 
 a {
-    text-decoration: none;
-    color: var(--body-color);
+   text-decoration: none;
+   color: var(--body-color);
 }
 
 a:hover,
 a:focus {
-    color: maroon;    
+   color: maroon;    
 }
 
 header,
 .post {
-    background: var(--header-bg);
+   background: var(--header-bg);
 }
 
 header {
-    border-bottom: 1px solid var(--body-bg);
+   border-bottom: 1px solid var(--body-bg);
 }
 
 address, .creator-caption {
-    font-style: normal;
-    font-size: 12px;
+   font-style: normal;
+   font-size: 12px;
 }
 
 .header-container {
-    position: relative;
-    height: 67px;
-    padding: 16px;
+   position: relative;
+   height: 67px;
+   padding: 16px;
 }
 
 .creator-tab,
 .extras-container {
-    padding: 10px;
+   padding: 10px;
 }
 
 .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 }
 
 .site-logo {
-    width: 127px;
-    min-height: 55px;
-    min-width: 120px;
+   width: 127px;
+   min-height: 55px;
+   min-width: 120px;
 }
 
 .avatar {
-    border-radius: var(--avatar-border-radius);
-    width: 34px;
-    height: 34px;
+   border-radius: var(--avatar-border-radius);
+   width: 34px;
+   height: 34px;
 }
 
 .post {
-    margin-bottom: 25px;
+   margin-bottom: 25px;
 }
 
 .user-profile-link,
 .creator-profile-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-items: center;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   align-items: center;
 }
 .creator-profile-link {
-    margin-right: 7px;
+   margin-right: 7px;
 }
 
 .creator-tab {
-    display: flex;
+   display: flex;
 }
 
 .creator-details {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
+   display: flex;
+   flex-direction: column;
+   align-items: start;
+   justify-content: center;
 }
 
 .creator-name,
 .likes-count, .username {
-    font-size: 13px;
-    font-weight: 700;
+   font-size: 13px;
+   font-weight: 700;
 }
 
 .post-img {
-    max-width: 100%;
+   max-width: 100%;
 }
 
 .buttons {
-    display: flex;
-    margin-bottom: 7px;
+   display: flex;
+   margin-bottom: 7px;
 }
 
 .btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
- 
+   background: none;
+   border: none;
+   cursor: pointer;
+}
 
 .btn-icon:hover {
-    transform: scale(1.1);
+   transform: scale(1.1);
 }
 
 .btn:focus:not(:active) {
-    outline: 2px solid;
-    outline-offset: 2px;
-    transform: scale(1.1);
+   outline: 2px solid;
+   outline-offset: 2px;
+   transform: scale(1.1);
 }
 
 .btn-icon:focus:active {
-    outline: none;
-    transform: scale(0.95);
-}
+   outline: none;
+   transform: scale(0.95);
 }
 
 .icon,
 .btn-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 13px;
+   width: 24px;
+   height: 24px;
+   margin-right: 13px;
 }
 
 .dm-icon {
-    filter: drop-shadow(0 0 .1px black);
-    width: 23px;
-    height: 23px;
+   filter: drop-shadow(0 0 .1px black);
+   width: 23px;
+   height: 23px;
 }
 
 .likes-count {
-    margin-bottom: 12px;
+   margin-bottom: 12px;
 }
 
 .creator-caption {
-    margin-bottom: 4px;
+   margin-bottom: 4px;
 }
 
 .hidden {
-    display: none;
+   display: none;
 }
